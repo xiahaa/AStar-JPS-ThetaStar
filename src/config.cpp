@@ -36,7 +36,7 @@ void Config::setConfig(int st, double hw, int mt, int bt, int ad, int cc, int as
 // Set a parameter by tag name (as in gl_const.h) and string value (for bools and enums)
 bool Config::setParamByTag(const std::string& tag, const std::string& value)
 {
-    if (!SearchParams) setDefaults();
+    if (!SearchParams) setDefaultConfigAstar(); // Initialize with A* defaults if not already initialized
     std::string v = value;
     std::transform(v.begin(), v.end(), v.begin(), ::tolower);
     if (tag == CNS_TAG_ST) {
@@ -79,7 +79,7 @@ bool Config::setParamByTag(const std::string& tag, const std::string& value)
 // Set a parameter by tag name and double value (for numeric params)
 bool Config::setParamByTag(const std::string& tag, double value)
 {
-    if (!SearchParams) setDefaults();
+    if (!SearchParams) setDefaultConfigAstar(); // Initialize with A* defaults if not already initialized
     if (tag == CNS_TAG_HW) {
         if (value < 1) value = 1;
         SearchParams[CN_SP_HW] = value;

@@ -2,7 +2,7 @@
 #include <chrono>
 #include "wrapper.h"
 
-using namespace JPS;
+// using namespace JPS; // Removed as JPS namespace is not defined or used by plan_2d related components
 
 class Timer {
     typedef std::chrono::high_resolution_clock high_resolution_clock;

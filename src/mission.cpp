@@ -82,11 +82,13 @@ void Mission::getPath(std::vector<std::vector<int>> &path)
             point.push_back(it->i);
             path.push_back(point);
         }
-        // we also need to insert the end point
-        std::vector<int> endPoint;
-        endPoint.push_back(sr.end.j);
-        endPoint.push_back(sr.end.i);
-        path.push_back(endPoint);
+        // The sr.lppath should already contain all nodes from start to goal.
+        // The following lines attempting to add sr.end are removed as SearchResult has no 'end' member
+        // and lppath is expected to be complete.
+        // std::vector<int> endPoint;
+        // endPoint.push_back(sr.end.j);
+        // endPoint.push_back(sr.end.i);
+        // path.push_back(endPoint);
     }
 }
 
