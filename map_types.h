@@ -7,7 +7,7 @@
 // Forward declaration for GridMap to be used in ISearch if necessary
 // class GridMap; // Not strictly needed here yet, but good practice if ISearch will use it.
 
-namespace प्योर_थीटा_स्टार // Using a namespace to avoid potential name clashes
+namespace pure_theta_star // Changed namespace
 {
 
 /**
@@ -124,6 +124,6 @@ private:
     int goal_row_, goal_col_;
 };
 
-} // namespace प्योर_थीटा_स्टार
+} // namespace pure_theta_star
 
 #endif // MAP_TYPES_H
