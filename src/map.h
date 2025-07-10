@@ -5,7 +5,7 @@
 #include <sstream>
 #include <string>
 #include <algorithm>
-#include <vector>	
+#include <vector>
 class Map
 {
     public:
@@ -13,7 +13,7 @@ class Map
         Map(const Map& orig);
         ~Map();
 
-        bool getMap(const char *FileName);
+        bool getMap(const std::vector<std::vector<int>>& map, int startx, int starty, int finishx, int finishy, int cell_size);
         bool CellIsTraversable (int i, int j) const;
         bool CellOnGrid (int i, int j) const;
         bool CellIsObstacle(int i, int j) const;
@@ -27,4 +27,3 @@ class Map
 };
 
 #endif
-

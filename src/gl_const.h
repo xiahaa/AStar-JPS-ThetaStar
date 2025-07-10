@@ -67,17 +67,10 @@
 
 //Search Parameters
     #define CN_SP_ST 0
-
-        #define CNS_SP_ST_BFS           "bfs"
-        #define CNS_SP_ST_DIJK          "dijkstra"
         #define CNS_SP_ST_ASTAR         "astar"
-        #define CNS_SP_ST_JP_SEARCH     "jp_search"
         #define CNS_SP_ST_TH            "theta"
 
-        #define CN_SP_ST_BFS            0
-        #define CN_SP_ST_DIJK           1
         #define CN_SP_ST_ASTAR          2
-        #define CN_SP_ST_JP_SEARCH      3
         #define CN_SP_ST_TH             4
 
     #define CN_SP_AD 1 //AllowDiagonal
@@ -137,4 +130,3 @@
     #define CNS_OTHER_MATRIXSEPARATOR   ' '
 
 #endif
-

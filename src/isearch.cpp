@@ -22,7 +22,7 @@ bool ISearch::stopCriterion()
     return false;
 }
 
-SearchResult ISearch::startSearch(ILogger *Logger, const Map &map, const EnvironmentOptions &options)
+SearchResult ISearch::startSearch(const Map &map, const EnvironmentOptions &options)
 {
     std::chrono::time_point<std::chrono::system_clock> start, end;
     start = std::chrono::system_clock::now();
@@ -58,9 +58,7 @@ SearchResult ISearch::startSearch(ILogger *Logger, const Map &map, const Environ
             addOpen(*it);
             it++;
         }
-        Logger->writeToLogOpenClose(open, close, false);
     }
-    Logger->writeToLogOpenClose(open, close, true);
     sresult.pathfound = false;
     sresult.nodescreated = closeSize + openSize;
     sresult.numberofsteps = closeSize;
@@ -74,7 +72,7 @@ SearchResult ISearch::startSearch(ILogger *Logger, const Map &map, const Environ
     sresult.time = static_cast<double>(std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count()) / 1000000000;
     if (pathfound)
         makeSecondaryPath();
-    
+
     sresult.hppath = &hppath; //Here is a constant pointer
     sresult.lppath = &lppath;
     return sresult;

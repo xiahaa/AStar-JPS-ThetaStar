@@ -1,11 +1,12 @@
 #ifndef ISEARCH_H
 #define ISEARCH_H
-#include "ilogger.h"
+
 #include "searchresult.h"
 #include "environmentoptions.h"
 #include <list>
 #include <unordered_map>
 #include <cmath>
+#include "map.h"
 
 class ISearch
 {
@@ -13,7 +14,7 @@ class ISearch
         ISearch();
         virtual ~ISearch(void);
 
-        SearchResult startSearch(ILogger *Logger, const Map &Map, const EnvironmentOptions &options);
+        SearchResult startSearch(const Map &Map, const EnvironmentOptions &options);
 
     protected:
         Node findMin();

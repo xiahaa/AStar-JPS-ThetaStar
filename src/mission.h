@@ -4,15 +4,10 @@
 #include "map.h"
 #include "config.h"
 #include "isearch.h"
-#include "ilogger.h"
 #include "searchresult.h"
 #include "environmentoptions.h"
-#include "jp_search.h"
 #include "astar.h"
-#include "bfs.h"
-#include "dijkstra.h"
 #include "theta.h"
-#include "xmllogger.h"
 #include "path_smoothing.h"
 
 class Mission
@@ -22,14 +17,12 @@ class Mission
         Mission (const char* fileName);
         ~Mission();
 
-        bool getMap();
+        bool getMap(int startX, int startY, int endX, int endY, int cellSize, std::vector<std::vector<int>> &mapData);
         bool getConfig();
-        bool createLog();
         void createSearch();
         void createEnvironmentOptions();
         void startSearch();
         void printSearchResultsToConsole();
-        void saveSearchResultsToLog();
 
     private:
         const char* getAlgorithmName();
@@ -38,10 +31,8 @@ class Mission
         Config                  config;
         EnvironmentOptions      options;
         ISearch*                search;
-        ILogger*                logger;
         const char*             fileName;
         SearchResult            sr;
 };
 
 #endif
-

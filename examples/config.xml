@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+    <algorithm>
+        <searchtype>theta</searchtype>
+        <metrictype>euclid</metrictype>
+        <breakingties>g-max</breakingties>
+        <hweight>1</hweight>
+        <allowdiagonal>true</allowdiagonal>
+        <cutcorners>false</cutcorners>
+        <allowsqueeze>false</allowsqueeze>
+        <postsmoothing>true</postsmoothing>
+    </algorithm>
+</root>

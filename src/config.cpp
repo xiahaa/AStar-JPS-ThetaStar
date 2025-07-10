@@ -51,23 +51,11 @@ bool Config::getConfig(const char *FileName)
         value = element->GetText();
     std::transform(value.begin(), value.end(), value.begin(), ::tolower);
 
-    if (value == CNS_SP_ST_BFS) {
-        N = 8;
-        SearchParams = new double[N];
-        SearchParams[CN_SP_ST] = CN_SP_ST_BFS;
-    }
-    else if (value == CNS_SP_ST_DIJK) {
-        N = 8;
-        SearchParams = new double[N];
-        SearchParams[CN_SP_ST] = CN_SP_ST_DIJK;
-    }
-    else if (value == CNS_SP_ST_ASTAR || value == CNS_SP_ST_JP_SEARCH || value == CNS_SP_ST_TH) {
+    if (value == CNS_SP_ST_ASTAR || value == CNS_SP_ST_TH) {
         N = 8;
         SearchParams = new double[N];
         SearchParams[CN_SP_ST] = CN_SP_ST_ASTAR;
-        if (value == CNS_SP_ST_JP_SEARCH)
-            SearchParams[CN_SP_ST] = CN_SP_ST_JP_SEARCH;
-        else if (value == CNS_SP_ST_TH)
+        if (value == CNS_SP_ST_TH)
             SearchParams[CN_SP_ST] = CN_SP_ST_TH;
         element = algorithm->FirstChildElement(CNS_TAG_HW);
         if (!element) {
@@ -113,7 +101,7 @@ bool Config::getConfig(const char *FileName)
             }
         }
 
-        
+
         element = algorithm->FirstChildElement(CNS_TAG_BT);
         if (!element) {
             std::cout << "Warning! No '" << CNS_TAG_BT << "' tag found in XML file" << std::endl;
@@ -135,8 +123,8 @@ bool Config::getConfig(const char *FileName)
     else {
         std::cout << "Error! Value of '" << CNS_TAG_ST << "' tag (algorithm name) is not correctly specified."
                   << std::endl;
-        std::cout << "Supported algorithm's names are: '" << CNS_SP_ST_BFS << "', '" << CNS_SP_ST_DIJK << "', '"
-                  << CNS_SP_ST_ASTAR << "', '" << CNS_SP_ST_TH << "', '" << CNS_SP_ST_JP_SEARCH << "'." << std::endl;
+        std::cout << "Supported algorithm's names are: '"  <<
+                  CNS_SP_ST_ASTAR << "', '" << CNS_SP_ST_TH << "'." << std::endl;
         return false;
     }
 
@@ -224,7 +212,7 @@ bool Config::getConfig(const char *FileName)
             }
         }
     }
-    
+
     element = algorithm->FirstChildElement(CNS_TAG_PS);
     if (!element)
     {
@@ -242,7 +230,7 @@ bool Config::getConfig(const char *FileName)
             stream >> check;
             stream.clear();
             stream.str("");
-    
+
             if (check != "1" && check != "true" && check != "0" && check != "false") {
                 std::cout << "Warning! Value of '" << CNS_TAG_PS << "' is not correctly specified." << std::endl;
                 std::cout << "Value of '" << CNS_TAG_PS << "' was defined to default - false " << std::endl;
@@ -254,79 +242,6 @@ bool Config::getConfig(const char *FileName)
                 SearchParams[CN_SP_PS] = 0;
         }
     }
-    
-    
-    options = root->FirstChildElement(CNS_TAG_OPT);
-    LogParams = new std::string[3];
-    LogParams[CN_LP_PATH] = "";
-    LogParams[CN_LP_NAME] = "";
 
-    if (!options) {
-        std::cout << "Warning! No '" << CNS_TAG_OPT << "' tag found in XML file." << std::endl;
-        std::cout << "Value of '" << CNS_TAG_LOGLVL << "' tag was defined to 'short log' (1)." << std::endl;
-        LogParams[CN_LP_LEVEL] = CN_LP_LEVEL_SHORT_WORD;
-    }
-    else {
-        element = options->FirstChildElement(CNS_TAG_LOGLVL);
-        if (!element) {
-            std::cout << "Warning! No '" << CNS_TAG_LOGLVL << "' tag found in XML file." << std::endl;
-            std::cout << "Value of '" << CNS_TAG_LOGLVL << "' tag was defined to 'short log' (1)." << std::endl;
-            LogParams[CN_LP_LEVEL] = CN_LP_LEVEL_SHORT_WORD;
-        }
-        else {
-            stream << element->GetText();
-            stream >> value;
-            stream.str("");
-            stream.clear();
-            //std::transform(value.begin(), value.end(), value.begin(), ::tolower);
-            if (value == CN_LP_LEVEL_NOPE_WORD || value == CN_LP_LEVEL_NOPE_VALUE)
-                LogParams[CN_LP_LEVEL] = CN_LP_LEVEL_NOPE_WORD;
-            else if (value == CN_LP_LEVEL_TINY_WORD || value == CN_LP_LEVEL_TINY_VALUE)
-                LogParams[CN_LP_LEVEL] = CN_LP_LEVEL_TINY_WORD;
-            else if (value == CN_LP_LEVEL_SHORT_WORD || value == CN_LP_LEVEL_SHORT_VALUE)
-                LogParams[CN_LP_LEVEL] = CN_LP_LEVEL_SHORT_WORD;
-            else if (value == CN_LP_LEVEL_MEDIUM_WORD || value == CN_LP_LEVEL_MEDIUM_VALUE)
-                LogParams[CN_LP_LEVEL] = CN_LP_LEVEL_MEDIUM_WORD;
-            else if (value == CN_LP_LEVEL_FULL_WORD || value == CN_LP_LEVEL_FULL_VALUE)
-                LogParams[CN_LP_LEVEL] = CN_LP_LEVEL_FULL_WORD;
-            else {
-                std::cout << "'" << CNS_TAG_LOGLVL << "' is not correctly specified" << std::endl;
-                std::cout << "Value of '" << CNS_TAG_LOGLVL << "' tag was defined to 'short log' (1)." << std::endl;
-                LogParams[CN_LP_LEVEL] = CN_LP_LEVEL_SHORT_WORD;
-            }
-            std::cout << "LogLevel: " << LogParams[CN_LP_LEVEL] << std::endl;
-        }
-
-
-        element = options->FirstChildElement(CNS_TAG_LOGPATH);
-        if (!element) {
-            std::cout << "Warning! No '" << CNS_TAG_LOGPATH << "' tag found in XML file." << std::endl;
-            std::cout << "Value of '" << CNS_TAG_LOGPATH << "' tag was defined to 'current directory'." << std::endl;
-        }
-        else if (!element->GetText()) {
-            std::cout << "Warning! Value of '" << CNS_TAG_LOGPATH << "' tag is missing!" << std::endl;
-            std::cout << "Value of '" << CNS_TAG_LOGPATH << "' tag was defined to 'current directory'." << std::endl;
-        }
-        else {
-            LogParams[CN_LP_PATH] = element->GetText();
-        }
-
-
-        element = options->FirstChildElement(CNS_TAG_LOGFN);
-        if (!element) {
-            std::cout << "Warning! No '" << CNS_TAG_LOGFN << "' tag found in XML file!" << std::endl;
-            std::cout << "Value of '" << CNS_TAG_LOGFN
-                      << "' tag was defined to default (original filename +'_log' + original file extension."
-                      << std::endl;
-        }
-        else if (!element->GetText()) {
-            std::cout << "Warning! Value of '" << CNS_TAG_LOGFN << "' tag is missing." << std::endl;
-            std::cout << "Value of '" << CNS_TAG_LOGFN
-                      << "' tag was defined to default (original filename +'_log' + original file extension."
-                      << std::endl;
-        }
-        else
-            LogParams[CN_LP_NAME] = element->GetText();
-    }
     return true;
 }
