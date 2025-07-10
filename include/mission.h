@@ -23,6 +23,9 @@ class Mission
         void createEnvironmentOptions();
         void startSearch();
         void printSearchResultsToConsole();
+        bool setDefaultConfig(bool use_theta);
+        void getPath(std::vector<std::vector<int>> &path);
+        bool getPathValid();
 
     private:
         const char* getAlgorithmName();

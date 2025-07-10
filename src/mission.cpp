@@ -31,6 +31,14 @@ bool Mission::getConfig()
     return config.getConfig(fileName);
 }
 
+bool Mission::setDefaultConfig(bool use_theta)
+{
+    if (use_theta)
+        config.setDefaultConfigTheta();
+    else
+        config.setDefaultConfigAstar();
+    return true;
+}
 
 void Mission::createEnvironmentOptions()
 {
@@ -61,6 +69,30 @@ void Mission::startSearch()
     {
         smooth_search_result(sr, map, options.cutcorners);
     }
+}
+
+void Mission::getPath(std::vector<std::vector<int>> &path)
+{
+    path.clear();
+    if (sr.pathfound) {
+        std::list<Node> &srpath = *sr.lppath;
+        for (std::list<Node>::const_iterator it = srpath.begin(); it != srpath.end(); it++) {
+            std::vector<int> point;
+            point.push_back(it->j);
+            point.push_back(it->i);
+            path.push_back(point);
+        }
+        // we also need to insert the end point
+        std::vector<int> endPoint;
+        endPoint.push_back(sr.end.j);
+        endPoint.push_back(sr.end.i);
+        path.push_back(endPoint);
+    }
+}
+
+bool Mission::getPathValid()
+{
+    return sr.pathfound;
 }
 
 void Mission::printSearchResultsToConsole()
