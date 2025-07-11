@@ -54,7 +54,7 @@ def main():
     print(f"Loading image from {filename}...")
     img = cv2.imread(filename, cv2.IMREAD_GRAYSCALE)  # Load as grayscale
 
-    img = cv2.resize(img, (400, 300))  # Resize to 400x300 pixels for testing
+    # img = cv2.resize(img, (400, 300))  # Resize to 400x300 pixels for testing
 
     origin = [0,0]  # x, y of the map origin
     dim = [img.shape[1], img.shape[0]]  # width, height in pixels
@@ -85,25 +85,10 @@ def main():
     import random
     start_index = random.choice(free_indices)
     goal_index = random.choice(free_indices)
-    while abs(start_index - goal_index) < 100:  # Ensure at least 1000 pixels apart
+    while abs(start_index - goal_index) < 1000:  # Ensure at least 1000 pixels apart
         goal_index = random.choice(free_indices)
     print(f"Start index: {start_index}, Goal index: {goal_index}")
     print(f"Start cell value: {map_data[start_index]}, Goal cell value: {map_data[goal_index]}")
-    # Print a small region around start and goal for debugging
-    def print_region(idx, label):
-        x = idx % dim[0]
-        y = idx // dim[0]
-        print(f"{label} region (centered at {x},{y}):")
-        for dy in range(-2, 3):
-            for dx in range(-2, 3):
-                nx, ny = x+dx, y+dy
-                if 0 <= nx < dim[0] and 0 <= ny < dim[1]:
-                    print(f"{map_data[ny*dim[0]+nx]:3}", end=" ")
-                else:
-                    print("  X", end=" ")
-            print()
-    print_region(start_index, "Start")
-    print_region(goal_index, "Goal")
 
     # Swap start_w and goal_w to (row, col) if needed
     start_w = [start_index % dim[0] * resolution, start_index // dim[0] * resolution]  # [row, col]
@@ -133,7 +118,7 @@ def main():
 
     if status_astar == 0:
         print("A* Path Found Successfully!")
-        print(f"  Path: {path_astar}")
+        # print(f"  Path: {path_astar}")
         print(f"  Time spent: {time_astar:.4f} ms")
     else:
         print("A* Failed to find a path.")
@@ -157,7 +142,7 @@ def main():
 
     if status_theta == 0:
         print("Theta* Path Found Successfully!")
-        print(f"  Path: {path_theta}")
+        # print(f"  Path: {path_theta}")
         print(f"  Time spent: {time_theta:.4f} ms")
     else:
         print("Theta* Failed to find a path.")
@@ -172,19 +157,19 @@ def main():
     ax.imshow(img_color)
 
     # Draw start and goal
-    ax.scatter([start_w[1]], [start_w[0]], c='lime', s=80, marker='o', label='Start')
-    ax.scatter([goal_w[1]], [goal_w[0]], c='red', s=80, marker='o', label='Goal')
+    ax.scatter([start_w[0]], [start_w[1]], c='lime', s=80, marker='o', label='Start')
+    ax.scatter([goal_w[0]], [goal_w[1]], c='red', s=80, marker='o', label='Goal')
 
     # Draw A* path (blue)
     if status_astar == 0 and path_astar:
-        path_astar_y = [pt[0] for pt in path_astar]
-        path_astar_x = [pt[1] for pt in path_astar]
+        path_astar_x = [pt[0] for pt in path_astar]
+        path_astar_y = [pt[1] for pt in path_astar]
         ax.plot(path_astar_x, path_astar_y, color='blue', linewidth=2, label="A* Path")
 
     # Draw Theta* path (magenta)
     if status_theta == 0 and path_theta:
-        path_theta_y = [pt[0] for pt in path_theta]
-        path_theta_x = [pt[1] for pt in path_theta]
+        path_theta_x = [pt[0] for pt in path_theta]
+        path_theta_y = [pt[1] for pt in path_theta]
         ax.plot(path_theta_x, path_theta_y, color='magenta', linewidth=2, label="Theta* Path")
 
     ax.legend()

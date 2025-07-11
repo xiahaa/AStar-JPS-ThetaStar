@@ -51,7 +51,7 @@ int plan_2d(std::vector<float> &origin, std::vector<int> &dim, std::vector<signe
     }
 
     Mission mission;
-    int cellSize = 1;
+    int cellSize = resolution;
     if (!mission.getMap(start_x, start_y, goal_x, goal_y, cellSize, map_grid))
     {
         return -1; // Failed to get the map
@@ -70,8 +70,8 @@ int plan_2d(std::vector<float> &origin, std::vector<int> &dim, std::vector<signe
         path.clear();
         for (const auto &pt : path_int)
         {
-            double x = origin[0] + pt[0] * resolution;
-            double y = origin[1] + pt[1] * resolution;
+            double x = origin[0] + pt[0] * cellSize;
+            double y = origin[1] + pt[1] * cellSize;
             path.push_back({x, y});
         }
         time_spent = dt_theta;
@@ -89,8 +89,8 @@ int plan_2d(std::vector<float> &origin, std::vector<int> &dim, std::vector<signe
         path.clear();
         for (const auto &pt : path_int)
         {
-            double x = origin[0] + pt[0] * resolution;
-            double y = origin[1] + pt[1] * resolution;
+            double x = origin[0] + pt[0] * cellSize;
+            double y = origin[1] + pt[1] * cellSize;
             path.push_back({x, y});
         }
         time_spent = dt_astar;

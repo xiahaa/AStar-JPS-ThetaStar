@@ -33,27 +33,27 @@ bool Map::CellOnGrid(int i, int j) const
 
 bool Map::getMap(const std::vector<std::vector<int>>& map, int startx, int starty, int finishx, int finishy, int cell_size)
 {
+    Grid = &map;
     if (!Grid || Grid->empty() || (*Grid)[0].empty()) {
         std::cout << "Error! Empty map provided!" << std::endl;
         return false;
     }
-    printf("Map size: %d x %d\n", height, width);
     height = map.size();
     width = map[0].size();
-    Grid = &map;
 
+    // printf("Map size: %d x %d\n", height, width);
     start_i = starty;
     start_j = startx;
     goal_i = finishy;
     goal_j = finishx;
     cellSize = cell_size;
 
-    printf("Start cell: (%d, %d)\n", start_i, start_j);
-    printf("Goal cell: (%d, %d)\n", goal_i, goal_j);
-    printf("Cell size: %f\n", cellSize);
-    printf("Start cell value: %d\n", (*Grid)[start_i][start_j]);
-    printf("Goal cell value: %d\n", (*Grid)[goal_i][goal_j]);
-    printf("CN_GC_NOOBS: %d\n", CN_GC_NOOBS);
+    // printf("Start cell: (%d, %d)\n", start_i, start_j);
+    // printf("Goal cell: (%d, %d)\n", goal_i, goal_j);
+    // printf("Cell size: %f\n", cellSize);
+    // printf("Start cell value: %d\n", (*Grid)[start_i][start_j]);
+    // printf("Goal cell value: %d\n", (*Grid)[goal_i][goal_j]);
+    // printf("CN_GC_NOOBS: %d\n", CN_GC_NOOBS);
 
     if ((*Grid)[start_i][start_j] != CN_GC_NOOBS) {
         std::cout << "Error! Start cell is not traversable (cell's value is" << (*Grid)[start_i][start_j] << ")!"
