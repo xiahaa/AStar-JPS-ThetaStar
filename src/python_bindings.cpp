@@ -5,11 +5,11 @@
 
 namespace py = pybind11;
 
-PYBIND11_MODULE(planner_cpp, m) {
+PYBIND11_MODULE(ThetaStarPlanner, m) {
     m.doc() = R"pbdoc(
         Python module for A* and Theta* path planning
         ---------------------------------------------
-        .. currentmodule:: planner_cpp
+        .. currentmodule:: ThetaStarPlanner
         .. autosummary::
            :toctree: _generate
            plan_2d

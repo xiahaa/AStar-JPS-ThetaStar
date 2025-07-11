@@ -74,6 +74,7 @@ int plan_2d(std::vector<float> &origin, std::vector<int> &dim, std::vector<signe
             double y = origin[1] + pt[1] * resolution;
             path.push_back({x, y});
         }
+        path.push_back({goal[0], goal[1]}); // Ensure the goal is included in the path
         time_spent = dt_theta;
         return mission.getPathValid() ? 0 : -1; // Return 0 if the path is valid
     }
@@ -93,6 +94,7 @@ int plan_2d(std::vector<float> &origin, std::vector<int> &dim, std::vector<signe
             double y = origin[1] + pt[1] * resolution;
             path.push_back({x, y});
         }
+        path.push_back({goal[0], goal[1]}); // Ensure the goal is included in the path
         time_spent = dt_astar;
         return mission.getPathValid() ? 0 : -1; // Return 0 if the path is valid
     }

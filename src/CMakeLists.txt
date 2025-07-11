@@ -59,10 +59,10 @@ set(SOURCE_FILES
         python_bindings.cpp # Added python_bindings.cpp
         )
 
-add_library(planner_cpp SHARED ${SOURCE_FILES})
+add_library(ThetaStarPlanner SHARED ${SOURCE_FILES})
 
 # Link pybind11
-target_link_libraries(planner_cpp PRIVATE pybind11::module)
+target_link_libraries(ThetaStarPlanner PRIVATE pybind11::module)
 
 # Ensure the library is placed in a location where Python can find it,
 # or provide instructions to the user to add the build directory to PYTHONPATH.
@@ -70,11 +70,11 @@ target_link_libraries(planner_cpp PRIVATE pybind11::module)
 
 # Optional: Define a module name that Python expects, if different from target name.
 # By default, pybind11 creates a module based on the target name.
-# On Linux, it will be planner_cpp.so, on Windows planner_cpp.pyd.
-# pybind11_add_module(planner_cpp_py ${SOURCE_FILES} src/python_bindings.cpp) # Example if using pybind11_add_module
+# On Linux, it will be ThetaStarPlanner.so, on Windows ThetaStarPlanner.pyd.
+# pybind11_add_module(ThetaStarPlanner_py ${SOURCE_FILES} src/python_bindings.cpp) # Example if using pybind11_add_module
 
 # Include directories (important for CMake to find headers)
-target_include_directories(planner_cpp PUBLIC ../include) # Make headers in 'include' available
+target_include_directories(ThetaStarPlanner PUBLIC ../include) # Make headers in 'include' available
 # pybind11::module should handle its own include directories when linked.
 
 # Get Python's extension suffix (e.g., .cpython-38-x86_64-linux-gnu.so or .pyd on Windows)
@@ -99,8 +99,8 @@ else()
 endif()
 
 # Set the output name and suffix for the Python module
-set_target_properties(planner_cpp PROPERTIES
+set_target_properties(ThetaStarPlanner PROPERTIES
     PREFIX ""                          # No 'lib' prefix for Python modules
-    LIBRARY_OUTPUT_NAME "planner_cpp"  # Output name
+    LIBRARY_OUTPUT_NAME "ThetaStarPlanner"  # Output name
     SUFFIX "${PYTHON_EXT_SUFFIX}"      # Suffix like .cpython-XYZ.so or .pyd
 )
