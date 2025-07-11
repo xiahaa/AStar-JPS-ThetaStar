@@ -37,18 +37,18 @@ for candidate_dir in build_dir_candidates:
         # This is a simplified search.
 
 try:
-    import planner_cpp
+    import ThetaStarPlanner
     module_found = True
 except ImportError as e:
-    print(f"Error importing planner_cpp: {e}")
-    print("Please ensure that planner_cpp module is built and either:")
+    print(f"Error importing ThetaStarPlanner: {e}")
+    print("Please ensure that ThetaStarPlanner module is built and either:")
     print("1. The script is run from a directory where Python can find it (e.g., build directory after CMake).")
     print("2. The build directory (e.g., 'build' or 'build/Release') is in your PYTHONPATH.")
     print(f"Current sys.path: {sys.path}")
     exit(1)
 
 def main():
-    print("Successfully imported planner_cpp module.")
+    print("Successfully imported ThetaStarPlanner module.")
 
     # Example Usage
     origin = [0.0, 0.0] # Map origin (meters)
@@ -83,7 +83,7 @@ def main():
     # Plan using A*
     print("\nPlanning with A*...")
     use_theta_star_false = False
-    status_astar, path_astar, time_astar = planner_cpp.plan_2d(
+    status_astar, path_astar, time_astar = ThetaStarPlanner.plan_2d(
         origin, dim, map_data, start_m, goal_m, resolution, use_theta_star_false
     )
 
@@ -100,7 +100,7 @@ def main():
     # Plan using Theta*
     print("\nPlanning with Theta*...")
     use_theta_star_true = True
-    status_theta, path_theta, time_theta = planner_cpp.plan_2d(
+    status_theta, path_theta, time_theta = ThetaStarPlanner.plan_2d(
         origin, dim, map_data, start_m, goal_m, resolution, use_theta_star_true
     )
 
