@@ -14,21 +14,16 @@ Map::Map()
 
 Map::~Map()
 {
-    if (Grid) {
-        for (int i = 0; i < height; ++i)
-            delete[] Grid[i];
-        delete[] Grid;
-    }
 }
 
 bool Map::CellIsTraversable(int i, int j) const
 {
-    return (Grid[i][j] == CN_GC_NOOBS);
+    return ((*Grid)[i][j] == CN_GC_NOOBS);
 }
 
 bool Map::CellIsObstacle(int i, int j) const
 {
-    return (Grid[i][j] != CN_GC_NOOBS);
+    return ((*Grid)[i][j] != CN_GC_NOOBS);
 }
 
 bool Map::CellOnGrid(int i, int j) const
@@ -38,21 +33,14 @@ bool Map::CellOnGrid(int i, int j) const
 
 bool Map::getMap(const std::vector<std::vector<int>>& map, int startx, int starty, int finishx, int finishy, int cell_size)
 {
-    if (map.empty() || map[0].empty()) {
+    if (!Grid || Grid->empty() || (*Grid)[0].empty()) {
         std::cout << "Error! Empty map provided!" << std::endl;
         return false;
     }
-
+    printf("Map size: %d x %d\n", height, width);
     height = map.size();
     width = map[0].size();
-
-    Grid = new int *[height];
-    for (int i = 0; i < height; ++i) {
-        Grid[i] = new int[width];
-        for (int j = 0; j < width; ++j) {
-            Grid[i][j] = map[i][j];
-        }
-    }
+    Grid = &map;
 
     start_i = starty;
     start_j = startx;
@@ -60,14 +48,21 @@ bool Map::getMap(const std::vector<std::vector<int>>& map, int startx, int start
     goal_j = finishx;
     cellSize = cell_size;
 
-    if (Grid[start_i][start_j] != CN_GC_NOOBS) {
-        std::cout << "Error! Start cell is not traversable (cell's value is" << Grid[start_i][start_j] << ")!"
+    printf("Start cell: (%d, %d)\n", start_i, start_j);
+    printf("Goal cell: (%d, %d)\n", goal_i, goal_j);
+    printf("Cell size: %f\n", cellSize);
+    printf("Start cell value: %d\n", (*Grid)[start_i][start_j]);
+    printf("Goal cell value: %d\n", (*Grid)[goal_i][goal_j]);
+    printf("CN_GC_NOOBS: %d\n", CN_GC_NOOBS);
+
+    if ((*Grid)[start_i][start_j] != CN_GC_NOOBS) {
+        std::cout << "Error! Start cell is not traversable (cell's value is" << (*Grid)[start_i][start_j] << ")!"
                   << std::endl;
         return false;
     }
 
-    if (Grid[goal_i][goal_j] != CN_GC_NOOBS) {
-        std::cout << "Error! Goal cell is not traversable (cell's value is" << Grid[goal_i][goal_j] << ")!"
+    if ((*Grid)[goal_i][goal_j] != CN_GC_NOOBS) {
+        std::cout << "Error! Goal cell is not traversable (cell's value is" << (*Grid)[goal_i][goal_j] << ")!"
                   << std::endl;
         return false;
     }
@@ -83,5 +78,5 @@ int Map::getValue(int i, int j) const
     if (j < 0 || j >= width)
         return -1;
 
-    return Grid[i][j];
+    return (*Grid)[i][j];
 }

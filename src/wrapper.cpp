@@ -28,8 +28,8 @@ class Timer {
 int plan_2d(std::vector<float> &origin, std::vector<int> &dim, std::vector<signed char> &map, std::vector<float> &start, std::vector<float> &goal, float resolution, std::vector<std::vector<double> > &path, double &time_spent, bool use_theta)
 {
     std::vector<std::vector<int>> map_grid;
-    int height = dim[0];
-    int width = dim[1];
+    int height = dim[1];
+    int width = dim[0];
     map_grid.resize(height);
     for (int i = 0; i < height; ++i)
     {
@@ -74,7 +74,6 @@ int plan_2d(std::vector<float> &origin, std::vector<int> &dim, std::vector<signe
             double y = origin[1] + pt[1] * resolution;
             path.push_back({x, y});
         }
-        path.push_back({goal[0], goal[1]}); // Ensure the goal is included in the path
         time_spent = dt_theta;
         return mission.getPathValid() ? 0 : -1; // Return 0 if the path is valid
     }
@@ -94,7 +93,6 @@ int plan_2d(std::vector<float> &origin, std::vector<int> &dim, std::vector<signe
             double y = origin[1] + pt[1] * resolution;
             path.push_back({x, y});
         }
-        path.push_back({goal[0], goal[1]}); // Ensure the goal is included in the path
         time_spent = dt_astar;
         return mission.getPathValid() ? 0 : -1; // Return 0 if the path is valid
     }

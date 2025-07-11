@@ -23,7 +23,7 @@ class Map
         int     start_i, start_j;
         int     goal_i, goal_j;
         double  cellSize;
-        int**   Grid;
+        const std::vector<std::vector<int>> *Grid;
 };
 
 #endif

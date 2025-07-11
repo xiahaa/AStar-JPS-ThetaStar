@@ -63,11 +63,11 @@ def main():
     # Add some obstacles
     # map_data[index] where index = row * width + col
     # Example: place an obstacle at (row=1, col=2) -> 1 * 10 + 2 = 12
-    if dim[0] > 1 and dim[1] > 2: map_data[1 * dim[1] + 2] = 1
-    if dim[0] > 2 and dim[1] > 2: map_data[2 * dim[1] + 2] = 1
-    if dim[0] > 3 and dim[1] > 2: map_data[3 * dim[1] + 2] = 1
-    if dim[0] > 4 and dim[1] > 2: map_data[4 * dim[1] + 2] = 1
-    if dim[0] > 5 and dim[1] > 2: map_data[5 * dim[1] + 2] = 1 # Wall
+    if dim[0] > 1 and dim[1] > 2: map_data[1 * dim[1] + 2] = 100
+    if dim[0] > 2 and dim[1] > 2: map_data[2 * dim[1] + 2] = 100
+    if dim[0] > 3 and dim[1] > 2: map_data[3 * dim[1] + 2] = 100
+    if dim[0] > 4 and dim[1] > 2: map_data[4 * dim[1] + 2] = 100
+    if dim[0] > 5 and dim[1] > 2: map_data[5 * dim[1] + 2] = 100 # Wall
 
     # Start and Goal in meters
     start_m = [0.05, 0.05] # Cell (0,0)
